@@ -100,6 +100,12 @@ WHERE StudentID NOT IN (
     FROM ENROLLMENT
 );
 
+-- without subquery
+SELECT S.StuName FROM STUDENT s
+LEFT JOIN ENROLLMENT  E
+ON E.StudentID = S.StudentID
+WHERE E.CourseID IS NULL
+
 -- 19.	Display course name having second highest credit. (COURSE table)
 
 SELECT TOP 1 CourseName, CourseCredits
