@@ -155,3 +155,4 @@ COUNT(*) AS TotalFaculty,
 AVG(DATEDIFF(YEAR, FacultyJoiningDate, GETDATE())) AS AvgExperienceYears
 FROM FACULTY
 GROUP BY FacultyDepartment;
+
