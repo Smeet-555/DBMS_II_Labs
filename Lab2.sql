@@ -87,6 +87,16 @@ BEGIN
 END;
 GO
 
+-- extras : SP to select first N student 
+CREATE OR ALTER PROCEDURE SP_FIRST_N_STUDENTS
+@topN int
+AS
+BEGIN
+    SELECT TOP (@topN) *
+    FROM STUDENT
+    ORDER BY StuEnrollmentYear;
+END;
+GO
 -- PART B
 -- 7.	Create a stored procedure which displays faculty designation-wise count.
 CREATE OR ALTER PROCEDURE SP_FACULTY_DESIGNATION_COUNT
