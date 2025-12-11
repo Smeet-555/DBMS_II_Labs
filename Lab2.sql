@@ -2,12 +2,12 @@
 -- 1.	INSERT Procedures: Create stored procedures to insert records into STUDENT tables (SP_INSERT_STUDENT)
 CREATE OR ALTER PROCEDURE SP_INSERT_STUDENT
     @StudentID INT,
-    @StuName VARCHAR(100),
-    @StuEmail VARCHAR(100),
-    @StuPhone VARCHAR(15),
-    @StuDepartment VARCHAR(50),
-    @StuDOB DATE,
-    @StuEnrollmentYear INT
+    @StuName            VARCHAR(100),
+    @StuEmail           VARCHAR(100),
+    @StuPhone           VARCHAR(15),
+    @StuDepartment      VARCHAR(50),
+    @StuDOB             DATE,
+    @StuEnrollmentYear  INT
 AS
 BEGIN
     INSERT INTO STUDENT(StudentID, StuName, StuEmail, StuPhone, StuDepartment, StuDateOfBirth, StuEnrollmentYear)
@@ -22,11 +22,11 @@ GO
 -- 2.	INSERT Procedures: Create stored procedures to insert records into COURSE tables (SP_INSERT_COURSE)
 
 CREATE OR ALTER PROCEDURE SP_INSERT_COURSE
-    @CourseID VARCHAR(10),
-    @CourseName VARCHAR(100),
-    @Credits INT,
-    @Department VARCHAR(50),
-    @Semester INT
+    @CourseID              VARCHAR(10),
+    @CourseName            VARCHAR(100),
+    @Credits               INT,
+    @Department            VARCHAR(50),
+    @Semester              INT
 AS
 BEGIN
     INSERT INTO COURSE(CourseID, CourseName, CourseCredits, CourseDepartment, CourseSemester)
@@ -39,9 +39,9 @@ GO
 
 -- 3.	UPDATE Procedures: Create stored procedure SP_UPDATE_STUDENT to update Email and Phone in STUDENT table. (Update using studentID)
 CREATE OR ALTER PROCEDURE SP_UPDATE_STUDENT
-    @StudentID INT,
-    @StuEmail VARCHAR(100),
-    @StuPhone VARCHAR(15)
+    @StudentID  INT,
+    @StuEmail   VARCHAR(100),
+    @StuPhone   VARCHAR(15)
 AS
 BEGIN
     UPDATE STUDENT
@@ -54,7 +54,7 @@ GO
 
 -- 4.	DELETE Procedures: Create stored procedure SP_DELETE_STUDENT to delete records from STUDENT where Student Name is Om Patel.
 CREATE OR ALTER PROCEDURE SP_DELETE_STUDENT
-@studentName VARCHAR(50)
+@studentName    VARCHAR(50)
 AS
 BEGIN
     DELETE FROM STUDENT
@@ -115,7 +115,7 @@ GO
 
 -- PART C
 -- 9.	Create a stored procedure which displays department-wise maximum, minimum, and average credits of courses.
-CREATE PROCEDURE SP_COURSE_CREDIT_STATS
+CREATE OR ALTER PROCEDURE SP_COURSE_CREDIT_STATS
 AS
 BEGIN
     SELECT CourseDepartment,
@@ -129,7 +129,7 @@ GO
 
 
 -- 10.	Create a stored procedure that accepts StudentID as parameter and returns all courses the student is enrolled in with their grades.
-CREATE PROCEDURE SP_STUDENT_COURSE_DETAILS
+CREATE OR ALTER PROCEDURE SP_STUDENT_COURSE_DETAILS
     @StudentID INT
 AS
 BEGIN
