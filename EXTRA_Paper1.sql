@@ -29,18 +29,24 @@ FROM Employee
 ORDER BY SALARY DESC
 
 -- Question 5: List top 3 employees department wise as per salaries.      //Doubt
-SELECT TOP 3 D.DeptName , E.Name , E.Salary 
-FROM Employee E
-JOIN Department D
-ON E.DeptID = D.DeptID
-GROUP BY D.DeptName 
-ORDER BY E.Salary DESC
+SELECT Salary, 
+RANK() OVER (ORDER BY Salary) as salary
+FROM Employee
 
 -- Question 6: List City with Employee Count.
-SELECT City , COUNT(EmpId) as EmployeeCount
-FROM Employee 
-GROUP BY City
-
+SELECT D.DeptName , E.name , E.Salary
+FROM(
+    SELECT DeptId, Name ,Salary,
+    RANK() OVER (
+        PARTITION BY DeptID
+        ORDER BY Salary DESC
+    )as rn
+    FROM Employee
+)e
+JOIN Department D
+ON E.DeptID = D.DeptID
+WHERE rn <=3
+ORDER BY DeptName , E.Salary DESC
 -- Question 7: List City Wise Maximum, Minimum & Average Salaries & Give Proper Name As MaxSal, MinSal & AvgSal.
 
 SELECT City , MAX(Salary) as MaxSalary , MIN(Salary) as MinSalary , AVG(Salary) as Avgsalary
@@ -106,7 +112,20 @@ GROUP BY D.DeptName;
 
 
 -- Question 15: List City wise highest paid employee.     
-SELECT City , Name , MAX(Salary)
-FROM Employee
+-- ROW_NUMBER - consider this as giving a number to a each row in sequence
+
+SELECT City , Name ,Salary
+FROM (
+    SELECT City , Name , Salary,
+    ROW_NUMBER() OVER (
+        PARTITION BY City
+        ORDER BY Salary DESC
+    ) AS rn
+    FROM Employee
+)AS t              -- alias is t
+WHERE rn =1 
+ORDER BY City
+
+
 
 

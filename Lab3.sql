@@ -12,14 +12,19 @@ GO
 
 -- 2.	Create a stored procedure for ENROLLMENT table where user enters either StudentID and returns EnrollmentID, EnrollmentDate, Grade, and Status.
 
-CREATE OR ALTER PROCEDURE SP_ENROLL_STATS
-@StuId INT
+CREATE OR ALTER PROCEDURE SP_ENROLL_STATS_OR_CID
+@StuId INT = NULL,
+@CID VARCHAR(10) = NULL
+
 AS
 BEGIN
     SELECT EnrollmentID , EnrollmentDate , Grade , EnrollmentStatus
     FROM ENROLLMENT
     WHERE StudentID = @StuId
+    OR  CourseID = @CID
 END
+EXEC SP_ENROLL_STATS_OR_CID '1'
+EXEC SP_ENROLL_STATS_OR_CID @CID = 'CS101'
 GO
 
 -- 3.	Create a stored procedure that accepts two integers (min and max credits) and returns all courses whose credits fall between these values.
@@ -101,23 +106,13 @@ GO
 
 -- 8. Create a stored procedure that accepts either Student Name OR Department Name and returns student data accordingly.
 CREATE OR ALTER PROCEDURE SP_STUDENT_BY_NAME_OR_DEPT
-@searchValue VARCHAR(100),
-@searchType VARCHAR(10) -- 'NAME' or 'DEPT'
-AS
-BEGIN
-    IF @searchType = 'NAME'
-    BEGIN
-        SELECT StudentID, StuName, StuEmail, StuPhone, StuDepartment, StuDateOfBirth, StuEnrollmentYear
-        FROM STUDENT
-        WHERE StuName LIKE '%' + @searchValue + '%'
-    END
-    ELSE IF @searchType = 'DEPT'
-    BEGIN
-        SELECT StudentID, StuName, StuEmail, StuPhone, StuDepartment, StuDateOfBirth, StuEnrollmentYear
-        FROM STUDENT
-        WHERE StuDepartment = @searchValue
-    END
+@Name VARCHAR(100)
+AS 
+BEGIN 
+    SELECT * FROM STUDENT
+    WHERE StuName = @Name OR StuDepartment = @Name
 END
+EXEC SP_STUDENT_BY_NAME_OR_DEPT 'Raj Patel'
 GO
 
 -- 9. Create a stored procedure that accepts CourseID and returns all students enrolled grouped by enrollment status with counts.
@@ -180,3 +175,27 @@ BEGIN
     GROUP BY F.FacultyID, F.FacultyName, F.FacultyDepartment
 END
 GO
+
+
+
+-- OUTPUT PARAMETER
+-- find the number of courses offered by given department
+
+CREATE OR ALTER PROC SP_COURSE_BY_DEPARTMENT
+@department VARCHAR(100),
+@count INT OUT
+
+AS 
+BEGIN   
+    SELECT @count = COUNT(*) 
+    FROM COURSE
+    WHERE CourseDepartment = @department
+END
+GO
+
+DECLARE @COUNT INT
+EXEC SP_COURSE_BY_DEPARTMENT @department = 'CSE' , @COUNT = @count OUTPUT
+
+SELECT @COUNT AS Course_count
+
+-- SELECT * FROM COURSE
