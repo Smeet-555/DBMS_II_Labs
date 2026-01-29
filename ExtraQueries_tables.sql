@@ -66,4 +66,47 @@ INSERT INTO Employee (EmpID, Name, Email, City, Mobile, JoiningDate, Salary, Dep
 (121, 'Priya Sharma', 'priya2@test.com', 'Mumbai', '2233223322', '2023-06-10', 70000.00, 5);
 
 
+--PAPER - 2--
+
+-- Create color Table
+CREATE TABLE color (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    name VARCHAR(50) NOT NULL,
+    extra_fee DECIMAL(5,2) DEFAULT 0
+);
+
+-- Create customer Table
+CREATE TABLE customer (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    favorite_color_id INT FOREIGN KEY REFERENCES color(id)
+);
+
+-- Create category Table
+CREATE TABLE category (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    name VARCHAR(50) NOT NULL,
+    parent_id INT FOREIGN KEY REFERENCES category(id) NULL
+);
+
+-- Create clothing Table
+CREATE TABLE clothing (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    name VARCHAR(100) NOT NULL,
+    size VARCHAR(5) NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    color_id INT FOREIGN KEY REFERENCES color(id),
+    category_id INT FOREIGN KEY REFERENCES category(id)
+);
+
+-- Create clothing_order Table
+CREATE TABLE clothing_order (
+    id INT PRIMARY KEY IDENTITY(1,1),
+    customer_id INT FOREIGN KEY REFERENCES customer(id),
+    clothing_id INT FOREIGN KEY REFERENCES clothing(id),
+    items INT NOT NULL,
+    order_date DATE NOT NULL
+);
+
 
