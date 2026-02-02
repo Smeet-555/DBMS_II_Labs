@@ -131,3 +131,37 @@ JOIN category CAT
 WHERE C.first_name = 'Jay'
   AND CAT.name = 'T-Shirt'
   AND O.order_date > '2024-04-01';
+
+-- 4
+SELECT C.first_name
+FROM customer C
+JOIN color col
+    ON C.favorite_color_id = col.id
+WHERE col.extra_fee > 0;
+
+-- 5
+
+SELECT
+    CAT.name AS category_name,
+    MAX(CL.price) AS max_price,
+    MIN(CL.price) AS min_price,
+    AVG(CL.price) AS avg_price,
+    COUNT(CL.id) AS total_items
+FROM clothing CL
+JOIN category CAT
+    ON CL.category_id = CAT.id
+GROUP BY CAT.name
+ORDER BY CAT.name;
+
+-- 6
+SELECT
+    C.id,
+    C.first_name,
+    C.last_name
+FROM customer C
+LEFT JOIN clothing_order O
+    ON C.id = O.customer_id
+WHERE O.id IS NULL;
+
+
+-- 7
