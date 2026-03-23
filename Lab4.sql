@@ -60,10 +60,10 @@ END;
 
 
 CREATE FUNCTION fn_PrintNumbers (@N INT)
-RETURNS VARCHAR(MAX)
+RETURNS VARCHAR(100)
 AS
 BEGIN
-    DECLARE @i INT = 1, @Result VARCHAR(MAX) = '';
+    DECLARE @i INT = 1, @Result VARCHAR(100) = '';
 
     WHILE @i <= @N
     BEGIN
@@ -71,16 +71,16 @@ BEGIN
         SET @i += 1;
     END
 
-    RETURN @Result;
+    RETURN @Result; 
 END;
 
 
 
 CREATE OR ALTER FUNCTION fn_FactorialCourseCredits (@CourseID VARCHAR(10))
-RETURNS BIGINT
+RETURNS INT
 AS
 BEGIN
-    DECLARE @Credits INT, @Fact BIGINT = 1, @i INT = 1;
+    DECLARE @Credits INT, @Fact  INT = 1, @i INT = 1;
 
     SELECT @Credits = CourseCredits FROM COURSE WHERE CourseID = @CourseID;
 
@@ -106,7 +106,7 @@ BEGIN
 END;
 
 
-CREATE OR ALTER FUNCTION dbo.fn_StudentsByFirstLetter (@Letter CHAR(1))
+CREATE OR ALTER FUNCTION fn_StudentsByFirstLetter (@Letter CHAR(1))
 RETURNS TABLE
 AS
 RETURN
@@ -117,7 +117,7 @@ RETURN
 );
 
 
-CREATE FUNCTION dbo.fn_UniqueDepartments()
+CREATE FUNCTION fn_UniqueDepartments()
 RETURNS TABLE
 AS
 RETURN
@@ -126,7 +126,7 @@ RETURN
 );
 
 
-CREATE FUNCTION dbo.fn_CalculateAge (@DOB DATE)
+CREATE FUNCTION fn_CalculateAge (@DOB DATE)
 RETURNS INT
 AS
 BEGIN

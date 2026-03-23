@@ -1,3 +1,6 @@
+CREATE Database CSE_4A_124
+USE CSE_4A_124
+
 CREATE TABLE STUDENT (
     StudentID           INT             PRIMARY KEY,
     StuName             VARCHAR(100)    NOT NULL,
